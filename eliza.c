@@ -14,6 +14,8 @@
 
 enum YN {Yes, No};
 
+// ********************************************************************
+
 /* These structures define the keyword and response chains.  Each    */
 /* element in the keyword chain points to the anchor of a response   */
 /* chain.  When a keyword is found, this pointer is used to find a   */
@@ -567,6 +569,7 @@ char *Filename;
   return(headPtr);
   }  /* Eliza_init */
 
+// ********************************************************************
 
 /* Debugging routine to format keyword/response chains */
 void Format(Key_head)
@@ -600,8 +603,10 @@ struct Key_element *Key_head;
     }
   }
 
+// ********************************************************************
+
 void main(int argc, char *argv[])
-  {
+{
   /* - - - - Local Data - - - - */
   char Work_string[Input_size];  /* Buffer for I/O */
   struct Key_element *Key_head;  /* Pointer to head of response chain */
@@ -693,4 +698,5 @@ void main(int argc, char *argv[])
         }
       }
     };
-  }
+}
+
