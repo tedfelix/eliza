@@ -161,29 +161,35 @@ void Clean(char *String)
 /*           Amt - Number of chars to shift, negative is left     */
 /*   Output: String - Shifted                                     */
 /******************************************************************/
-void Strshift(String, Start, Amt)
-char *String;
-int Start;
-int Amt;
-  {
-  /* - - - - Local Data - - - - */
-  int I;
+void Strshift(char *String, int Start, int Amt)
+{
+    int I;
 
-  /* - - - - Program Begins - - - - */
+    // Shift left.
+    if (Amt < 0)
+    {
+        for (I = Start; (I - Amt) <= strlen(String); ++I)
+        {
+            String[I] = String[I - Amt];
+        }
+        return;
+    }
 
-  if (Amt < 0)
-    {  /* Shift left */
-    for (I = Start; (I - Amt) <= strlen(String); ++I)
-      String[I] = String[I - Amt];
+    // Shift right.
+    if (Amt > 0)
+    {
+        for (I = strlen(String); I >= Start; --I)
+        {
+            String[I + Amt] = String[I];
+        }
+        // Backfill with spaces.
+        for (I = Start; I < Start + Amt; ++I)
+        {
+            String[I] = ' ';
+        }
+        return;
     }
-  else if (Amt > 0)
-    {  /* Shift right */
-    for (I = strlen(String); I >= Start; --I)
-      String[I + Amt] = String[I];
-    for (I = Start; I < Start + Amt; ++I)
-      String[I] = ' ';
-    }
-  }
+}
 
 
 /****************************************************************/
@@ -192,38 +198,27 @@ int Amt;
 /*           String - String to compare keyword against.        */
 /*   Output: Strcmp2 - false = Not equal, true = Equal          */
 /****************************************************************/
-int Strcmp2(Keyword, String)
-char *Keyword;
-char *String;
-  {
-  /* - - - - Local Data - - - - */
-  int I;
-  int Done = false;  /* Assume matching */
-  int Found = true;  /* Haven't even started */
+int Strcmp2(const char *Keyword, const char *String)
+{
+    int I;
 
-  /* - - - - Program Begins - - - - */
-
-  for (I = 0; Keyword[I]  &&  !Done; ++I)
+    for (I = 0; Keyword[I]; ++I)
     {
-    /* If we're at the end of String, it's over */
-    if (!String[I])
-      {
-      Found = false;   /* Indicate not found */
-      Done = true;     /* Break out of loop  */
-      }
-    else
-      {
-      /* If there is a mis-match */
-      if (Keyword[I] != String[I])
+        /* If we're at the end of String, it's over */
+        if (!String[I])
         {
-        Found = false;   /* Indicate not found */
-        Done = true;     /* Break out of loop  */
+            return false;
         }
-      }
+        
+        /* If there is a mis-match */
+        if (Keyword[I] != String[I])
+        {
+            return false;
+        }
     }
 
-  return(Found);
-  }
+    return true;
+}
 
 
 /******************************************************************/
@@ -247,7 +242,7 @@ int Start;
     for (X = 0; X < Num_conj; ++X)
       {
       /* If it's the one on the left */
-      if (Strcmp2(&(Conjugates[X][0]), &(String[I])))
+      if (Strcmp2(&(Conjugates[X][0][0]), &(String[I])))
         {
         /* Find the difference in length between the old and new forms */
         Amt = strlen(&(Conjugates[X][1][0])) - strlen(&(Conjugates[X][0][0]));
@@ -266,7 +261,7 @@ int Start;
         X = Num_conj;
         }
       /* If it's the one on the right */
-      else if (Strcmp2(&(Conjugates[X][1]), &(String[I])))
+      else if (Strcmp2(&(Conjugates[X][1][0]), &(String[I])))
         {
         /* Find the difference in length between the old and new forms */
         Amt = strlen(&(Conjugates[X][0][0])) - strlen(&(Conjugates[X][1][0]));
