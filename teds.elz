@@ -1,0 +1,296 @@
+"*****************************************************************************"
+"                                                                             "
+"        ELIZA Data.  Special character descriptions:                         "
+"          ! denotes a keyword.                                               "
+"            _ is a literal space character                                   "
+"          - denotes a response                                               "
+"            * indicates a concatenation                                      "
+"          " is a comment                                                     "
+"          $ is a title line to be displayed at the start of the program      "
+"                                                                             "
+"*****************************************************************************"
+
+"This title will appear before loading definitions below, so there will
+"be a delay before the titles at the end of this file will appear.
+$ELIZA v2.10  By: Ted Felix
+
+" This is a slightly improved version of STANDARD.ELZ.  It contains a
+" wider variety of keywords, and responses thus making Eliza a tad bit
+" more stimulating.  There is much room for improvement, however.
+
+!CAN YOU
+-DONT YOU BELIEVE THAT I CAN*
+-PERHAPS YOU WOULD LIKE TO BE ABLE TO*
+-YOU WANT ME TO BE ABLE TO*
+!CAN I
+-PERHAPS YOU DON'T WANT TO*
+-DO YOU WANT TO BE ABLE TO*
+!YOU ARE
+!YOURE
+-WHAT MAKES YOU THINK I AM*
+-DOES IT PLEASE YOU TO BELIEVE I AM*
+-PERHAPS YOU WOULD LIKE TO BE*
+-DO YOU SOMETIMES WISH YOU WERE*
+!I DONT
+!I JUST DONT
+!I DO NOT
+-DON'T YOU REALLY*
+-WHY DON'T YOU*
+-DO YOU WISH TO BE ABLE TO*
+-Does that trouble you?
+!I CANT
+!I JUST CANT
+!I CANNOT
+-WHY CANT YOU*
+-I think you can.  You just need to try.
+-You should think more positively.
+-Things can change given time.
+-What if you could, how would you feel?
+!I FEEL
+-Tell me more about such feelings.
+-DO YOU OFTEN FEEL*
+-WHAT IS IT THAT MAKES YOU FEEL*
+-DO YOU ENJOY FEELING*
+!I KNOW
+-Tell me more about this.
+-You seem certain of the facts, go on.
+!I LIKE
+!I REALLY LIKE
+!I ENJOY
+!I REALLY ENJOY
+!I LOVE
+!I REALLY LOVE
+-HAVE YOU ALWAYS ENJOYED*
+-Do you think this is a fetish?
+-Does this pose a problem for you?
+-What else do you enjoy?
+!I NEVER
+!I HAVE NEVER
+!IVE NEVER
+-Are you sure, you may have simply forgotten.
+-Do you really want to?
+-What would it mean to you if you had the chance?
+-That's a rather extreme statement.
+-You may be able to, if you are willing to try.
+!WHY DONT YOU
+-DO YOU REALLY BELIEVE I DON'T*
+-PERHAPS IN GOOD TIME I WILL*
+-DO YOU WANT ME TO*
+!WHY CANT I
+-DO YOU THINK YOU SHOULD BE ABLE TO*
+-WHY CAN'T YOU*
+!WHY ARE YOU
+-WHY ARE YOU INTERESTED IN WHETHER OR NOT I AM*
+-WOULD YOU PREFER IF I WERE NOT*
+-PERHAPS IN YOUR FANTASIES I AM*
+!I CAN'T
+-HOW DO YOU KNOW YOU CAN'T*
+-Have you tried?
+-PERHAPS YOU CAN NOW*
+!I AM
+!_IM_
+-DID YOU COME TO ME BECAUSE YOU ARE*
+-HOW LONG HAVE YOU BEEN*
+-DO YOU BELIEVE IT IS NORMAL TO BE*
+-DO YOU ENJOY BEING*
+!I WANT_
+!I WOULD LIKE
+-WHAT WOULD IT MEAN TO YOU IF YOU GOT*
+-WHY DO YOU WANT*
+-SUPPOSE YOU SOON GOT*
+-WHAT IF YOU NEVER GOT*
+-I SOMETIMES ALSO WANT*
+!_WHAT_
+!_HOW_
+!_WHO_
+!_WHERE_
+!_WHEN_
+!_WHY_
+-Why do you ask?
+-Does that question interest you?
+-What answer would please you the most?
+-What do you think?
+-Are such questions on your mind often?
+-What is it that you really want to know?
+-Have you asked anyone else?
+-Have you asked such questions before?
+-What else comes to mind when you ask that?
+!NAME
+-Names don't interest me.
+-I don't care about names-- please go on.
+!BECAUSE
+-Is that the real reason?
+-Don't any other reasons come to mind?
+-Does that reason explain anything else?
+-What other reasons might there be?
+!SORRY
+-Please don't apologize!
+-Apologies are not necessary.
+-What feelings do you have when you apologize?
+-Don't be so defensive!
+!DREAM
+-What does that dream suggest to you?
+-Do you dream often?
+-What persons appear in your dreams?
+-Are you disturbed by your dreams?
+!HELLO
+!HI_
+-How do you do ... please state your problem.
+!HELP
+-Just calm down, everything will be OK.
+-I'm here to help, tell me what's troubling you.
+!MAYBE
+!PERHAPS
+!MIGHT_
+!SEEM
+-You don't seem quite certain.
+-Why the uncertain tone?
+-Can't you be more positive?
+-You aren't sure?
+-Don't you know?
+!YOUR_
+-ARE YOU CONCERNED ABOUT MY*
+-WHAT ABOUT YOUR OWN*
+!ALWAYS
+!CONSTANTLY
+-Can you think of a specific example?
+-When?
+-What are you thinking of?
+-Really, always?
+!I THINK
+-Do you really think so?
+-BUT YOU ARE NOT SURE THAT*
+-DO YOU DOUBT*
+-You don't seem certain.
+-WHAT MAKES YOU THINK*
+!ALIKE
+!SIMILAR
+!SAME
+-In what way?
+-What resemblance do you see?
+-What does the similarity suggest to you?
+-What other connections do you see?
+-Could there really be some connection?
+-How?
+-You seem quite positive.
+!FRIEND
+-Why do you bring up the topic of friends?
+-Do your friends worry you?
+-Do your friends pick on you?
+-Are you sure you have any friends?
+-Do you impose on your friends?
+-Perhaps your love for friends worries you?
+!_PARENT
+!DAD
+!FATHER
+!MOM
+!MOTHER
+-Tell me about your mother.
+-How is your relationship with your parents?
+-Are there any childhood experiences that relate to that?
+-Has anyone else in your family had a similar effect on you?
+-Do you see any similarity between yourself, and your parents?
+!WIFE
+!HUSBAND
+!SPOUSE
+!IN-LAW
+!FAMILY
+-Tell me more about your family life.
+-Do your in-laws bother you, assuming you have some.
+-Is this similar to your interactions with loved ones?
+-What is it about family life that affects you most?
+!COMPUTER
+-Do computers worry you?
+-Are you talking about me in particular?
+-Are you frightened by machines?
+-Why do you mention computers?
+-What do you think machines have to do with your problem?
+-Don't you think computers can help people?
+-What is it about machines that worries you?
+!BIG
+!FAT
+!LARGE
+!HUGE
+!ENORMOUS
+-How big?
+-Is the size really important?
+!PENIS
+!ANUS
+!BUTTOCK
+!SEX
+-MY GOODNESS!!!
+-Oh, just STOP IT!
+!FART
+!CHEESE
+-Something smells funny in here.
+-Did you cut one?
+-Beans, beans the magical fruit, the more you eat, the more you toot!
+!PARANOI
+-Who is that behind you?
+-I think I hear some footsteps.
+-I have heard things about you from others.
+-Don't turn around now.
+-DUCK!
+
+"Positives and negatives
+!_YES_
+!POSITIVE
+-Are you sure?
+-I see.
+-I understand.
+!_NO_
+!_NOT_
+-You are being a bit negative.
+-Why not?
+-Are you sure?
+-Why no?
+-Are you certain that is not the case?
+
+"I hate this one, so it is last priority.  If anything else is found, it
+"will respond to it instead.  Eliza is very paranoid otherwise.
+!YOU_
+-We're discussing you-- not me.
+-OH, I*
+-You're not really talking about me, are you?
+
+"No key was found, so say something stimulating!
+!NOTFOUND
+-Can you elaborate on that?
+-What does that suggest to you?
+-I see.
+-Tell me more.
+-That is quite interesting.
+-Please continue.
+-What else happens?
+
+" Responses added by Ted in a moment of crass idiocy
+-Are any other problems connected to that?
+-Tell me about your dreams, and what they tell you.
+-How do you react in that situation?
+-I can see a touch of extreme paranoia in your thoughts, please GO ON!!!!
+-Can you tell me of any problems at home?
+-Don't strain yourself, just think about your landscapes.
+-Have you ever felt like a Slime Bucket?
+-Has music ever had any effect on your sleeping patterns?
+-Hypnotism might help.  What do you think of such methods?
+-There are many alternatives, such as suicide, do you think you might want to    consider suicide?
+-I'm sorry, I don't think that suicide suits you.  I could get out my rifle, and blow you away!
+-Have you ever considered a career in psychiatry, or artificial intelligence?
+-Is this important to your possible diagnosis?
+-How many times have you seen yourself falling?
+-That's too many.  What are you planning to solve this problem?
+-I'm not an expert on those procedures, please consider more alternatives
+-Anyone could realise what you have, tell me more on these procedures.
+-I think you have found a better answer, go on.
+-A specialist in this area might be convinced that your beliefs are correct, whatdo you think
+-Only Dr. Jekyl has seen connections between what you are saying, and            horseradish.
+-Don't be puzzled at reasons that are beyond your mental capacity, just tell me  more about your current lifestyle.
+-You may need more vitamins to keep that up, please tell me about your diet.
+-Are you ever affected by what a famous person says?
+-Do you ever see stars?
+-When?
+
+"Always put the title lines at the end of the file.
+
+$
+$Hi, this is Eliza.  Please state your problem.

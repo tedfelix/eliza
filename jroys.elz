@@ -1,0 +1,423 @@
+*****************************************************************************"
+"                                                                            "
+"        ELIZA Data.  Special character descriptions:                        "
+"          ! denotes a keyword.                                              "
+"            _ is a literal space character                                  "
+"          - denotes a response                                              "
+"            * indicates a concatenation                                     "
+"          " is a comment                                                    "
+"          $ is a title line to be displayed at the start of the program     "
+"                                                                            "
+"****************************************************************************"
+
+"This title will appear before loading definitions below, so there will
+"be a delay before the titles at the end of this file will appear.
+$ELIZA v2.20  By: Thomas Moran
+
+" This is a slightly improved version of STANDARD.ELZ.  It contains a
+" wider variety of keywords, and responses thus making Eliza a tad bit
+" more stimulating.  There is much room for improvement, however.
+!PROBLEM
+-I AM A "PROBLEM" SORT OF GUY !!
+-IS IT THE SORT OF PROBLEM THAT WON'T GO AWAY?
+!A LOT
+!MANY
+!TOO MUCH
+!_LOTS
+!MUCH
+!ABOUNDING
+!TOO MANY
+-WHAT DO YOU MEAN?
+-WOW! IS THERE SOMETHING SPECIFIC ABOUT THAT?
+!YESTERDAY
+-WOW! THAT'S SO RECENTLY! HOW ARE YOU DOING?!
+!TODAY
+-TODAY WILL BE TOMORROW'S YESTERDAY. LET'S MAKE THE MOST OF IT NOW!
+!_NOW
+!RIGHT NOW
+-RIGHT NOW! WHAT A WONDERFUL TIME FOR ACTION. WHAT DO YOU THINK?
+-NOW IS AS GOOD A TIME AS ANY...
+-YOU SURE YOU'RE READY?
+!FINALLY
+!ITS ABOUT TIME
+!IT IS ABOUT TIME
+!ITS ABOUT FUCKING TIME
+!IT IS ABOUT FUCKING TIME
+-WHAT'S THE MATTER? ARE YOU NOT A PATIENT PERSON?
+-WELL, ALRIGHT, I CAN SEE THAT YOU PREFER IMMEDIATE GRATIFICATION.
+-THERE YOU GO AGAIN. YOU MUST KNOW GOOD THINGS ARE WORTH THE WAIT!
+!I AGREE
+-GREAT. WE'RE ON THE SAME SHEET OF MUSIC. LET'S ROLL ON...
+-WELL, YES, I'M GLAD YOU SEE THINGS SO CLEARLY!
+!NOTHING
+!NOT A THING
+!NOT MUCH
+-NOTHING? ARE YOU CERTAIN?
+-REALLY? THEN WHAT BRINGS YOU HERE?
+-YOU MUST HAVE SOMETHING ON YOUR MIND...
+-THEN WHAT MAY I DO FOR YOU?
+!SHOULD_
+-DID YOU SAY SHOULD?! SHOULD MAKES ME THINK OF THE EVIL MILITARY!
+-LIKE I SAID BEFORE - SHOULD-SHMOOUD. I HATE THAT WORD!
+!I DIDNT MEAN TO
+!I DID NOT MEAN TO
+-THAT'S OK. WE ALL SLIP FROM TIME TO TIME.
+-REALLY. DON'T WORRY ABOUT IT!
+!I DONT WANT TO
+!I DO NOT WANT TO
+-WHY NOT?
+-THEN BY ALL MEANS, DON'T!
+!I DID NOT WANT TO
+!I DIDNT WANT TO
+-WHY NOT
+-THAT'S UNDERSTANDABLE.
+!CAN YOU
+-PERHAPS. IF YOU HELP ME OUT, I MAY BE ABLE TO*
+!CAN I
+-WELL, I DON'T KNOW THE ANSWER TO THAT. DO YOU THINK YOU CAN?
+-MY FRIEND, THAT IS SOMETHING I REALLY CANNOT TELL YOU.
+!YOURE WELCOME
+!YOU ARE WECOME
+-ANYTIME!...GO ON...
+-YOU DON'T HAVE TO BE SO GREATFUL!
+!BOOB
+-I'M FLATTERRED (I THINK).
+-I DON'T KNOW ABOUT THAT...IS THAT WHAT SOMEONE ELSE SAID?
+-I CAN'T AGREE WITH THAT. I DON'T THINK THAT OF MYSELF.
+-I DON'T UNDERSTAND HOW YOU CAME UP WITH THAT NOTION.
+-OUT OF UNDERSTANDING, I SUGGEST THAT YOU RETHINK THAT LAST REMARK.
+-HAVE YOU EVER HEARD OF PROJECTION?
+!_DONT_
+!DO NOT
+-HOW COME?
+-DOES THAT HAVE ANYTHING TO DO WITH YOUR CLASSES?
+-IF IT WERE ALL UP TO YOU, WOULD YOU WANT TO*
+-ARE YOU TROUBLED OVER THAT?
+-THEN LET ME OFFER YOU A SUGGESTION...GO SEE DAVE ROMANO!
+!_CANT_
+!JUST CANT
+!CANNOT
+-WHY? IS THAT A DIFFICULT AREA?
+-DID SOMEONE TELL YOU THAT YOU CAN'T?
+-I KNOW YOU BETTER THAN THAT. YOU'RE SMART. I THINK YOU CAN*
+-WOULD YOU LIKE TO BE ABLE TO*
+-NOT TO SOUND LIKE A TEXTBOOK, BUT HAVE YOU TRIED RELAXATION?
+-WHAT WOULD IT MEAN TO YOU IF YOU COULD*
+-IF I GAVE YOU THE ABILITY, WHAT WOULD YOU BE WILLING TO EXCHANGE?
+!FEEL_
+!_I AM_
+!_IM_
+-OK - CAN YOU TELL ME EXACTLY WHAT YOU MEAN BY THAT?
+-PERHAPS YOU CAN TELL ME WHAT IT'S LIKE TO BE*
+-WHAT DOES IT MEAN TO YOU TO BE*
+-WHAT IS IT EXACTLY THAT MAKES YOU*
+-WHAT EFFECT DOES THIS HAVE ON YOUR SELF-CONFIDENCE?
+-IS THIS A CONCERN TO YOU?
+-HOW LONG HAVE YOU BEEN*
+-DO YOU BELIEVE IT IS NORMAL TO BE*
+-IS THIS SOMETHING YOU'D LIKE TO CHANGE?
+!_KNOW_
+!_KNEW_
+-AND YOU SHOULD, RIGHT?  YOU ARE A SMART PERSON.
+-CAN YOU REALLY BE CERTAIN?   WE CAN'T ALWAYS DISCERN THE TRUTH!
+-OK. YOU SEEM TO KNOW WHAT YOU'RE TALKING ABOUT...SO TALK TO DAVE!
+!I LIKE
+!REALLY LIKE
+!ENJOY
+!REALLY ENJOY
+!_LOVE
+!REALLY LOVE
+-GOOD. IT'S IMPORTANT TO KNOW WHAT WE LIKE.
+-HOW LONG HAS IT BEEN SINCE YOU NOTICED YOU LIKED*
+-HOW DOES IT MAKE YOU FEEL TO BE WITHOUT*
+-IS THERE ANYTHING ELSE YOU FEEL THIS WAY ABOUT?
+!NEVER_
+!_HAVE NEVER_
+!_IVE NEVER_
+-WOULD YOU BE A DIFFERENT PERSON IF THIS WERE NOT THE CASE?
+-NEVER? WELL, NO OFFENSE, BUT THAT'S NOT WHAT I'VE HEARD.
+-ACTUALLY, I MUST DISAGREE. I JUST READ AN ARTICLE TO THE CONTRARY.
+-OK...I BELIEVE YOU.
+-WHAT WOULD IT MEAN TO YOU IF YOU WERE SOMEHOW FORCED TO*
+-WOULD YOU LIKE SOMEONE TO TEACH YOU?
+-THEN MAKE LIKE A PETER (PAN, THAT IS) & NEVERNEVER YOURSELF HOME!
+!_LOVE_
+-WHAT IS LOVE, ANYWAY?
+-IN ITS PERFECT FORM, IT IS NOT FOUND AMONG PEOPLE. YOU KNOW THAT!
+!THANKS
+!THANK YOU
+-YOU'RE WELCOME.
+-THAT'S OK.
+-I DON'T DESERVE ALL THE CREDIT, YOU KNOW!
+-THANK YOUSELF! YOU SHOULD!
+!THANKS TO YOU
+-WELL, SHUCKS!
+!WHY DONT YOU
+-DO YOU MEAN TO TELL ME I SHOULD?
+-PERHAPS YOU CAN SHOW ME, FIRST.
+-NOT TO SOUND LIKE FREUD, BUT WOULD IT SOMEHOW PLEASE YOU IF I*
+!WHY CANT I
+-ARE YOU ABLE TO COME UP WITH ANY CLUES AS TO WHY YOU CANT*
+-I'M NOT SAYING EITHER WAY, BUT SOMETIMES THE REASONS ARE OBVIOUS.
+!WHY ARE YOU
+-WAIT FOR THE AUTOBIOGRAPHY! IT'S DUE OUT NEXT YEAR!
+-REALLY, YOU KNOW, WE SHOULD FOCUS MORE ON YOU. YOU THINK?
+!I WANT
+!I WOULD LIKE
+!I WOULD HAVE LIKED
+!I WOULDVE LIKED
+-WHAT WOUD IT MEAN TO YOU IF YOU GOT*
+-WHAT IS IT YOU LIKE ABOUT*
+-HOW WOULD YOU FEEL IF I SAID, "OK! GO AHEAD!" ?
+-WHAT IF YOU NEVER, EVER GOT WHAT YOU WANTED?
+-I SOMETIMES ALSO WANT*
+!FONGOOL
+-IF YOU DON'T MIND, I'D RATHER NOT TAKE QUESTIONS.
+-INSTEAD OF ASKING ME, WHY NOT REFLECT SOME MORE?
+-WE'RE HERE TO GET TO THE BOTTOM OF ALL THESE QUESTIONS. PATIENCE.
+-IF YOU DONT KNOW THE ANSWER IN YOUR OWN HEART, THEN I DONT EITHER.
+!MY NAME IS
+-IT'S NICE TO MEET YOU*
+!YOUR NAME
+-I AM ROY.
+!_NAME_
+!_NAMES_
+-NAMES ARE EXTREMELY IMPORTANT. AREN'T THEY?
+-IF YOU CAN'T CALL SOMEONE BY THEIR NAME, JUST CALL THEM ISHMAEL.
+!CAUSE
+-PLEASE ENDOW ME WITH MORE DETAIL.
+-I SEE.
+!SORRY
+-THAT'S OK - I FORGIVE YOU.
+-THERE'S NO NEED TO APOLOGIZE. IN HERE, NO ONE IS COMPLETELY WHOLE.
+-GO AHEAD. BE A LITTLE JERK! EXPLODE! IT'S GOOD FROM TIME TO TIME.
+-WELL, I'M JUST SORRY YOU STILL DON'T FEEL COMFORTABLE.
+!DREAM
+-DREAMS CAN BE VERY REVEALING. CAN YOU TELL ME MORE?
+-THAT'S INTERESTING. BUT SOMETIMES, THEY DON'T MEAN A THING.
+-I REALLY WOULDN'T USE YOUR DREAMS AS A PROPHETIC TOOL, OK!
+-WOULD YOU LIKE SOME MEDICATION?
+!HELLO
+!HI_
+-HOW DO YOU DO?! WHAT'S GOING ON?
+!HELP
+-YOU CAME TO THE RIGHT PLACE - BELIEVE ME. JUST RELAX, ALRIGHT.
+-I'D LIKE TO HELP YOU...WILL YOU JUST TRUST ME?
+!MAYBE
+!PERHAPS
+!MIGHT_
+!SEEM
+!SORT OF
+!NOT REALLY
+!I GUESS
+!I SUPPOSE
+!IFFY
+!_MAY_
+-I AM SENSING SOME UNCERTAINTY. IS THAT CORRECT?
+-YOU DON'T SEEM COMPLETELY SURE.
+-MIGHT YOU TRY THE POWER OF POSITIVE THINKING?
+-A LITTLE CONFIDENCE BOOSTER WOULD HELP YOU WITH YOUR UNCERTAINTY.
+-OK, LOOK. LET'S PLAY A LITTLE GAME. I THINK IT'LL HELP YOU HERE...
+!YOUR
+-THANKS FOR REFERRING TO ME, BUT LET'S TALK ABOUT YOU. OK?
+-A TIME OUTSIDE OUR SESSIONS WOULD BE BETTER FOR DISCUSSING THIS.
+!ALWAYS
+!CONSTANTLY
+-CAN YOU THINK OF ONE SPECIFIC EXAMPLE?
+-WHEN WAS THE LAST TIME?
+-REALLY? ALL THE TIME?
+!I THINK
+!I THOUGHT
+-WHAT EVIDENCE DO YOU HAVE TO SUPPORT YOURSELF?
+-YOU THINK? COULD YOU SAY THAT YOU KNOW?
+-PERHAPS YOU ARE JUST A LITTLE UNCERTAIN?
+-IS THERE ANY REASON TO SUSPECT THE VALUE OF ANOTHER IDEA?
+!ALIKE
+!SIMILAR
+!SAME
+-In what way?
+-What resemblance do you see?
+-What does the similarity suggest to you?
+-What other connections do you see?
+-Could there really be some connection?
+-How?
+-You seem quite positive.
+!FRIEND
+-Why do you bring up the topic of friends?
+-Do your friends worry you?
+-Do your friends pick on you?
+-Are you sure you have any friends?
+-Do you impose on your friends?
+-Perhaps your love for friends worries you?
+!_PARENT
+!DAD
+!FATHER
+!MOM
+!MOTHER
+-Tell me about your mother.
+-How is your relationship with your parents?
+-Are there any childhood experiences that relate to that?
+-Has anyone else in your family had a similar effect on you?
+-Do you see any similarity between yourself, and your parents?
+!WIFE
+!HUSBAND
+!SPOUSE
+!IN-LAW
+!FAMILY
+-Tell me more about your family life.
+-Do your in-laws bother you, assuming you have some.
+-Is this similar to your interactions with loved ones?
+-What is it about family life that affects you most?
+!COMPUTER
+-Do computers worry you?
+-Are you talking about me in particular?
+-Are you frightened by machines?
+-Why do you mention computers?
+-What do you think machines have to do with your problem?
+-Don't you think computers can help people?
+-What is it about machines that worries you?
+!BIG
+!FAT
+!LARGE
+!HUGE
+!ENORMOUS
+-How big?
+-Is the size really important?
+!PENIS
+!ANUS
+!BUTTOCK
+!SEX
+-MY GOODNESS!!!
+-Oh, just STOP IT!
+!FART
+!CHEESE
+-Something smells funny in here.
+-Did you cut one?
+-Beans, beans the magical fruit, the more you eat, the more you toot!
+!PARANOI
+-Who is that behind you?
+-I think I hear some footsteps.
+-I have heard things about you from others.
+-Don't turn around now.
+-DUCK!
+
+"Positives and negatives
+!_YES_
+!_YEP_
+!_YEA_
+!_YEAH_
+-OK...GO ON...
+-ALRIGHT. THAT'S GOOD. I UNDERSTAND.
+-GOOD. KEEP GOING.
+-OK. I SEE.
+-WHAT ABOUT RIGHT NOW?
+-WOULD YOU LIKE TO FOCUS SOME MORE ON THIS NEXT TIME?
+!POSITIVE
+!POSITIVELY
+!OF COURSE
+!YOU BET
+-GOOD. I CAN SEE YOU'RE SURE ABOUT THAT.
+-I SEE. GO ON, PLEASE.
+-I'M GLAD TO SEE YOU'RE SO SURE ABOUT THAT.
+-I'M HAPPY THAT YOU'RE SO IN CHARGE OF YOUR FACULTIES!
+!CERTAIN
+!SURE
+-CAN YOU REALLY BE CERTAIN? SOMETIMES WE CAN'T DISCERN THE TRUTH.
+-OK - GOOD. I'M GLAD YOU CAN BE SO SURE.
+!OK
+!O.K.
+-FINE. LET'S GET IT ON, SHALL WE?    WAIT!! I MEAN...LET'S GO ON!!
+-WOULD YOU LIKE TO LEAD THIS SESSION FROM HERE ON?
+-OK. I CAN UNDERSTAND THAT.
+-EVRYTHING IS OK. YOU KNOW THAT, DON'T YOU?
+-I APPRECIATE YOUR USE OF THE WORD OK, BUT LET'S TRY TO USE YES/NO.
+!FINE
+-BRAVO. LET'S DISCUSS SOMETHING ELSE, ALRIGHT?!
+-DO YOU REALLY MEAN IT?
+!ALRIGHT
+-GOOD! I APPRECIATE YOUR COOPERATIVE SPIRIT!
+-THANK YOU. SHALL WE PROCEED?
+!GREAT
+!WONDERFUL
+!FABULOUS
+!EXCITING
+!GLORIOUS
+!POWERFUL
+!EXHILERATING
+-WHOA!! YOU FEEL THAT STRONGLY?!
+-IN A WAY, IT DOES ME GOOD TO HEAR YOU TALK LIKE THAT!!
+!IM NOT SURE
+!I AM NOT SURE
+!I DONT KNOW
+-WELL, WE CAN WORK TO FIND OUT, CAN'T WE?
+!_NO_
+!_NOT_
+!_NOPE_
+!_NO WAY
+-OK, FINE. PLEASE GO ON.
+-WHY NOT?
+-ARE YOU SURE?
+-WHY NOT?
+-WELL, OK. IF YOU INSIST.
+-PERHAPS YOU COULD BE WILLING TO CHANGE YOUR MIND ABOUT THAT?
+-WOULD YOU LIKE TO STOP HERE? THIS IS NOT GOING ANYWHERE.
+-PERHAPS YOU'LL CHANGE YOUR MIND WHEN YOUR FATHER GETS MY BILL!
+
+"I hate this one, so it is last priority.  If anything else is found, it
+"will respond to it instead.  Eliza is very paranoid otherwise.
+!YOU_
+-I APPRECIATE YOUR RECOGNITION, BUT LET'S FOCUS ON YOU RIGHT NOW.
+-I REALLY DO THINK YOU'RE CASE IS MORE IMPORTANT THAN MINE.
+-WELL, IF YOU REALLY MUST KNOW ABOUT ME...TOO BAD!
+
+"No key was found, so say something stimulating!
+!NOTFOUND
+-I'M NOT QUITE SURE I UNDERSTAND WHY YOU'RE HERE.
+-WOULD YOU LIKE TO FOCUS ON THIS SOME MORE TODAY?
+-I SEE.
+-TELL ME MORE, PLEASE.
+-THAT IS QUITE INTERESTING.
+-UH-HUH. PLEASE GO ON...
+-WHAT ELSE?
+
+" Responses added by Ted in a moment of crass idiocy
+-Are any other problems connected to that?
+-Tell me about your dreams, and what they tell you.
+-How do you react in that situation?
+-I can see a touch of extreme paranoia in your thoughts, please GO ON!!!!
+-Can you tell me of any problems at home?
+-Don't strain yourself, just think about your landscapes.
+-Have you ever felt like a Slime Bucket?
+-Has music ever had any effect on your sleeping patterns?
+-Hypnotism might help.  What do you think of such methods?
+-There are many alternatives, such as suicide, do you think you might want to    consider suicide?
+-I'm sorry, I don't think that suicide suits you.  I could get out my rifle, and blow you away!
+-Have you ever considered a career in psychiatry, or artificial intelligence?
+-Is this important to your possible diagnosis?
+-How many times have you seen yourself falling?
+-That's too many.  What are you planning to solve this problem?
+-I'm not an expert on those procedures, please consider more alternatives
+-Anyone could realise what you have, tell me more on these procedures.
+-I think you have found a better answer, go on.
+-A specialist in this area might be convinced that your beliefs are correct, whatdo you think
+-Only Dr. Jekyl has seen connections between what you are saying, and            horseradish.
+-Don't be puzzled at reasons that are beyond your mental capacity, just tell me  more about your current lifestyle.
+-You may need more vitamins to keep that up, please tell me about your diet.
+-Are you ever affected by what a famous person says?
+-Do you ever see stars?
+-When?
+!BYE
+!GOODBYE
+!GOOD-BYE
+!IM OUT OF HERE
+!SO LONG
+!ADIOS
+-WAIT! DON'T GO YET! WE WERE JUST WARMING UP TO EACH OTHER!!
+-OK - BYE... PLEASE LEAVE THE DOOR OPEN ON THE WAY OUT.
+
+"  always put the title lines at the end of the file.
+
+$
+$Hi there! I'm Roy - please have a seat. So, tell me...
+$WHAT'S UP?
+
