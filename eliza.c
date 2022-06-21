@@ -227,64 +227,69 @@ int Strcmp2(const char *Keyword, const char *String)
 /*           Start - Starting position in string (0 is beginning) */
 /*   Output: String - No more underscores                         */
 /******************************************************************/
-void Conjugate(String, Start)
-char *String;
-int Start;
-  {
-  /* - - - - Local Data - - - - */
+void Conjugate(char *String, int Start)
+{
+    int I;
 
-  int I, X, Amt;
+    for (I = Start; I < strlen(String); ++I)
+    {
+        int X;
 
-  /* - - - - Program Begins - - - - */
-
-  for (I = Start; I < strlen(String); ++I)
-    /* For each conjugate pair */
-    for (X = 0; X < Num_conj; ++X)
-      {
-      /* If it's the one on the left */
-      if (Strcmp2(&(Conjugates[X][0][0]), &(String[I])))
+        /* For each conjugate pair */
+        for (X = 0; X < Num_conj; ++X)
         {
-        /* Find the difference in length between the old and new forms */
-        Amt = strlen(&(Conjugates[X][1][0])) - strlen(&(Conjugates[X][0][0]));
+            /* If it's the one on the left */
+            if (Strcmp2(&(Conjugates[X][0][0]), &(String[I])))
+            {
+                /* Find the difference in length between the old and new forms */
+                int Amt = strlen(&(Conjugates[X][1][0])) -
+                          strlen(&(Conjugates[X][0][0]));
 
-        /* Make or take room for the new form */
-        Strshift(String, I, Amt);
+                /* Make or take room for the new form */
+                Strshift(String, I, Amt);
 
-        /* Place the new form in the string */
-        Substrcpy(&(Conjugates[X][1][0]), 0, strlen(&(Conjugates[X][1][0])),
-                  &(String[I]), No);
+                /* Place the new form in the string */
+                Substrcpy(&(Conjugates[X][1][0]),
+                          0,
+                          strlen(&(Conjugates[X][1][0])),
+                          &(String[I]),
+                          No);
 
-        /* Jump over the newly conjugated portion */
-        I += strlen(&(Conjugates[X][1][0])) - 2;
+                /* Jump over the newly conjugated portion */
+                I += strlen(&(Conjugates[X][1][0])) - 2;
 
-        /* Signal to leave the conjugate pair loop */
-        X = Num_conj;
+                /* Signal to leave the conjugate pair loop */
+                X = Num_conj;
+            }
+            /* If it's the one on the right */
+            else if (Strcmp2(&(Conjugates[X][1][0]), &(String[I])))
+            {
+                /* Find the difference in length between the old and new forms */
+                int Amt = strlen(&(Conjugates[X][0][0])) -
+                          strlen(&(Conjugates[X][1][0]));
+
+                /* Make or take room for the new form */
+                Strshift(String, I, Amt);
+
+                /* Place the new form in the string */
+                Substrcpy(&(Conjugates[X][0][0]),
+                          0,
+                          strlen(&(Conjugates[X][0][0])),
+                          &(String[I]),
+                          No);
+
+                /* Jump over the newly conjugated portion */
+                I += strlen(&(Conjugates[X][0][0])) - 2;
+
+                /* Signal to leave the conjugate pair loop */
+                X = Num_conj;
+            }
         }
-      /* If it's the one on the right */
-      else if (Strcmp2(&(Conjugates[X][1][0]), &(String[I])))
-        {
-        /* Find the difference in length between the old and new forms */
-        Amt = strlen(&(Conjugates[X][0][0])) - strlen(&(Conjugates[X][1][0]));
+    }
 
-        /* Make or take room for the new form */
-        Strshift(String, I, Amt);
-
-        /* Place the new form in the string */
-        Substrcpy(&(Conjugates[X][0][0]), 0, strlen(&(Conjugates[X][0][0])),
-                  &(String[I]), No);
-
-        /* Jump over the newly conjugated portion */
-        I += strlen(&(Conjugates[X][0][0])) - 2;
-
-        /* Signal to leave the conjugate pair loop */
-        X = Num_conj;
-        }
-
-      }
-
-  /* Clean up exclamation points */
-  Clean(String);
-  }
+    // Clean up exclamation points.
+    Clean(String);
+}
 
 
 /****************************************************************/
