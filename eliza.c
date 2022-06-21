@@ -297,102 +297,103 @@ void Conjugate(char *String, int Start)
 /*    Input:  Input - Input text to respond to                  */
 /*    Output: Input - Response                                  */
 /****************************************************************/
-void Get_response(Input, Keyhead_ptr)
-char *Input;
-struct Key_element *Keyhead_ptr;
-  {
-  /* - - - - Local Data - - - - */
-  int Found, I, Concat_pos;
-  struct Key_element *currPtr, *Key_ptr;
-  char Temp[Input_size];
+void Get_response(char *Input, struct Key_element *Keyhead_ptr)
+{
+    int Found = false;
+    int I;
+    int Concat_pos;
+    struct Key_element *currPtr;
+    struct Key_element *Key_ptr = NULL;
+    char Temp[Input_size];
 
-  /* - - - - Program Begins - - - - */
+    /* Add spaces to the front and end of the strings */
+    Temp[0] = ' ';
+    Temp[1] = '\0';
+    strcat(Temp, Input);
+    strcpy(Input, Temp);
+    Temp[0] = ' ';
+    Temp[1] = '\0';
+    strcat(Input, Temp);
 
-  /* Add spaces to the front and end of the strings */
-  Temp[0] = ' ';
-  Temp[1] = '\0';
-  strcat(Temp, Input);
-  strcpy(Input, Temp);
-  Temp[0] = ' ';
-  Temp[1] = '\0';
-  strcat(Input, Temp);
+    /* Convert string to upper case, and strip away punctuation */
+    Clean(Input);
 
-  /* Convert string to upper case, and strip away punctuation */
-  Clean(Input);
+    //printf("%s\n", Input);
 
-  //printf("%s\n", Input);
-
-  /* Set up for loop */
-  Found = false;
-  Key_ptr = NULL;
-
-  /* For each keyword in the chain */
-  for (currPtr = Keyhead_ptr;
-       currPtr  &&  !Found;
-       currPtr = currPtr -> nextPtr)
+    /* For each keyword in the chain */
+    for (currPtr = Keyhead_ptr;
+         currPtr  &&  !Found;
+         currPtr = currPtr -> nextPtr)
     {
-    //printf("%s\n", &(currPtr -> Keyword));
-    /* For each character in the input string, look for the keyword */
-    for (I = 0; I < strlen(Input)  &&  !Found; ++I)
-      {
-      /* If found in string */
-      if (Strcmp2(&(currPtr -> Keyword), &(Input[I])))
-        {  /* Break out of the loop, save position in keyword chain */
-        Found = true;
-        Key_ptr = currPtr;
+        //printf("%s\n", &(currPtr -> Keyword));
+        /* For each character in the input string, look for the keyword */
+        for (I = 0; I < strlen(Input)  &&  !Found; ++I)
+        {
+            /* If found in string */
+            if (Strcmp2(&(currPtr -> Keyword), &(Input[I])))
+            {  /* Break out of the loop, save position in keyword chain */
+                Found = true;
+                Key_ptr = currPtr;
+            }
+
+            /* If we've reached the NOTFOUND keyword */
+            if (Strcmp2(&(currPtr -> Keyword), "NOTFOUND"))
+            {  /* Set the Key_ptr in case we leave */
+                Key_ptr = currPtr;
+            }
         }
-
-      /* If we've reached the NOTFOUND keyword */
-      if (Strcmp2(&(currPtr -> Keyword), "NOTFOUND"))
-        {  /* Set the Key_ptr in case we leave */
-        Key_ptr = currPtr;
-        }
-      }
-    }  /* For each character in the input string */
-
-  /* If key was found, or NOTFOUND was selected */
-  if (Key_ptr)
-    {  /* Continue */
-    /* Get current response to work string */
-    strcpy(Temp, &(Key_ptr -> Response_ptr -> currPtr -> Response));
-
-    /* Move to next response */
-    if (Key_ptr -> Response_ptr -> currPtr -> nextPtr)
-      Key_ptr -> Response_ptr -> currPtr =
-        Key_ptr -> Response_ptr -> currPtr -> nextPtr;
-    else  /* Move back to head if out of responses */
-      Key_ptr -> Response_ptr -> currPtr =
-        Key_ptr -> Response_ptr -> headPtr;
-
-    /* If a concatenation is required */
-    if (Temp[strlen(Temp) - 1] == '*')
-      {
-      /* Save position of concat for later */
-      Concat_pos = strlen(Temp) - 1;
-
-      /* Convert * to a space */
-      Temp[Concat_pos] = ' ';
-
-      /* Move back to the start of the keyword */
-      --I;
-
-      /* Conjugate Input after keyword to end */
-      Conjugate(Input, I + strlen(&(Key_ptr -> Keyword)) - 1);
-
-      /* Attach rest of Input after keyword to the end of Temp */
-      strcat(Temp, &(Input[I + strlen(&(Key_ptr -> Keyword))]));
-
-      /* Remove extra space at concat position (if any) */
-      if (Temp[Concat_pos + 1] == ' ')
-        Strshift(Temp, Concat_pos + 1, -1);
-      }
     }
-  else  /* Indicate problem with definition file */
-    printf("NOTFOUND key missing in definition file\n");
 
-  /* Move final response to Input */
-  strcpy(Input, Temp);
-  }  /* Get_response */
+    /* If key was found, or NOTFOUND was selected */
+    if (Key_ptr)
+    {  /* Continue */
+        /* Get current response to work string */
+        strcpy(Temp, &(Key_ptr -> Response_ptr -> currPtr -> Response));
+
+        /* Move to next response */
+        if (Key_ptr -> Response_ptr -> currPtr -> nextPtr)
+        {
+            Key_ptr->Response_ptr->currPtr =
+                    Key_ptr->Response_ptr->currPtr->nextPtr;
+        }
+        else  /* Move back to head if out of responses */
+        {
+            Key_ptr->Response_ptr->currPtr =
+                    Key_ptr->Response_ptr->headPtr;
+        }
+
+        /* If a concatenation is required */
+        if (Temp[strlen(Temp) - 1] == '*')
+        {
+            /* Save position of concat for later */
+            Concat_pos = strlen(Temp) - 1;
+
+            /* Convert * to a space */
+            Temp[Concat_pos] = ' ';
+
+            /* Move back to the start of the keyword */
+            --I;
+
+            /* Conjugate Input after keyword to end */
+            Conjugate(Input, I + strlen(&(Key_ptr -> Keyword)) - 1);
+
+            /* Attach rest of Input after keyword to the end of Temp */
+            strcat(Temp, &(Input[I + strlen(&(Key_ptr -> Keyword))]));
+
+            /* Remove extra space at concat position (if any) */
+            if (Temp[Concat_pos + 1] == ' ')
+                Strshift(Temp, Concat_pos + 1, -1);
+        }
+    }
+    else  /* Indicate problem with definition file */
+    {
+        printf("NOTFOUND key missing in definition file\n");
+    }
+
+    /* Move final response to Input */
+    strcpy(Input, Temp);
+
+}
 
 
 /****************************************************************/
