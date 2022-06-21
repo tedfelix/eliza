@@ -299,6 +299,7 @@ void Conjugate(char *String, int Start)
 /****************************************************************/
 void Get_response(char *Input, struct Key_element *Keyhead_ptr)
 {
+    int len;
     int Found = false;
     int I;
     int Concat_pos;
@@ -306,14 +307,25 @@ void Get_response(char *Input, struct Key_element *Keyhead_ptr)
     struct Key_element *Key_ptr = NULL;
     char Temp[Input_size];
 
-    /* Add spaces to the front and end of the strings */
+    // Remove newline from the end.
+    len = strlen(Input);
+    if (len > 0  &&  Input[len-1] == '\n')
+        Input[len-1] = 0;
+
+    // Add a space to the front and copy to Temp.
     Temp[0] = ' ';
     Temp[1] = '\0';
     strcat(Temp, Input);
+
+    // Copy back to Input.
     strcpy(Input, Temp);
+
+    // Add a space to the end of Input.
     Temp[0] = ' ';
     Temp[1] = '\0';
     strcat(Input, Temp);
+
+    //printf(":%s:\n", Input);
 
     /* Convert string to upper case, and strip away punctuation */
     Clean(Input);
