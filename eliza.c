@@ -22,22 +22,27 @@ enum YN {Yes, No};
 struct ResponseElement
 {
     struct ResponseElement *nextPtr;  /* Pointer to next response */
-    char Response;                      /* The response text */
+    char Response;  /* The response text */
 };
 
 struct ResponseAnchor
 {
-    struct ResponseElement *headPtr;  /* Ptr to head of response chain */
-    struct ResponseElement *currPtr;  /* Ptr to current response */
+    // Ptr to head of response chain.
+    struct ResponseElement *headPtr;
+    // Ptr to current response.
+    struct ResponseElement *currPtr;
 };
 
 /* Keyword element definition. */
 struct Key_element
-  {
-  struct Key_element *nextPtr;          /* Pointer to next keyword element */
-  struct ResponseAnchor *Response_ptr;  /* Pointer to response chain */
-  char Keyword;                          /* The keyword itself */
-  };
+{
+    // Pointer to next keyword element.
+    struct Key_element *nextPtr;
+    // Pointer to response chain.
+    struct ResponseAnchor *Response_ptr;
+    // The keyword itself.
+    char Keyword;
+};
 
 
 /* These are the conversions that need to be done to certain words */
@@ -61,14 +66,14 @@ struct Key_element
 static char Conjugates[Num_conj][2][11] =
   {{" YOU WERE ", " I WAS "},
    {" YOU ARE ",  " I AM "},
-   {" I ",        " YOU "},      /* Converting You to I is not always good */
+   {" I ",        " YOU "},  // Converting You to I is not always good.
    {" YOURS ",    " MINE "},
    {" YOUR ",     " MY "},
    {" YOURE ",    " IM "},
    {" IVE ",      " YOUVE "},
    {" MYSELF ",   " YOURSELF "},
-   {" ME ",       " !YOU "},     /* Exclamation point forces these to */
-   {" OUR ",      " !YOUR "},    /*   convert left to right only.     */
+   {" ME ",       " !YOU "},   // Exclamation point forces these to
+   {" OUR ",      " !YOUR "},  // convert left to right only.
    {" OURS ",     " !YOURS "},
    {" MOM ",      " !MOTHER "},
    {" DAD ",      " !FATHER "}};
@@ -83,27 +88,21 @@ static char Conjugates[Num_conj][2][11] =
 /*           Null - Yes = Add null to end, No = don't           */
 /*   Output: Tstr is updated                                    */
 /****************************************************************/
-void Substrcpy(Fstr, Start, Len, Tstr, Null)
-char *Fstr;
-int Start;
-int Len;
-char *Tstr;
-enum YN Null;
-  {
+void Substrcpy(
+    char *Fstr, int Start, int Len, char *Tstr, enum YN nullTerminate)
+{
+    int I;
 
-  /* - - - - Local Data - - - - */
-  int I;
+    /* For each character in Fstr from Start for Len, copy to Tstr */
+    for (I = 0; Fstr[Start + I]  &&  I < Len; ++I)
+    {
+        Tstr[I] = Fstr[Start + I];
+    }
 
-  /* - - - - Program Begins - - - - */
-
-  /* For each character in Fstr from Start for Len, copy to Tstr */
-  for (I = 0; Fstr[Start + I]  &&  I < Len; ++I)
-    Tstr[I] = Fstr[Start + I];
-
-  /* If null requested, add it */
-  if (Null == Yes) Tstr[I] = '\0';
-
-  }
+    /* If null requested, add it */
+    if (nullTerminate == Yes)
+        Tstr[I] = '\0';
+}
 
 
 /****************************************************************/
@@ -111,18 +110,16 @@ enum YN Null;
 /*   Input:  String - String to remove underscores from         */
 /*   Output: String - No more underscores                       */
 /****************************************************************/
-void Remus(String)
-char *String;
-  {
-  /* - - - - Local Data - - - - */
-  int I;
+void Remus(char *String)
+{
+    int I;
 
-  /* - - - - Program Begins - - - - */
-
-  for (I = 0; I < strlen(String); ++I)
-    if (String[I] == '_')
-      String[I] = ' ';
-  }
+    for (I = 0; I < strlen(String); ++I)
+    {
+        if (String[I] == '_')
+            String[I] = ' ';
+    }
+}
 
 
 /****************************************************************/
@@ -130,23 +127,31 @@ char *String;
 /*   Input:  String - String to process                         */
 /*   Output: String processed                                   */
 /****************************************************************/
-void Clean(String)
-char *String;
-  {
-  /* - - - - Local Data - - - - */
-  int I, Shift = 0;
+void Clean(char *String)
+{
+    int I;
+    int Shift = 0;
 
-  /* - - - - Program Begins - - - - */
-
-  for (I = 0; I < strlen(String) + 1; ++I)
+    for (I = 0; I < strlen(String) + 1; ++I)
     {
-    String[I - Shift] = String[I];
-    if (String[I - Shift] >= 'a'  &&  String[I - Shift] <= 'z')
-      String[I - Shift] = String[I - Shift] - 32;  /* Capitalize */
-    else if (strchr("!?.,'", String[I - Shift]))
-      ++Shift;                                     /* Remove punctuation */
+        // Deal with dropped characters.
+        String[I - Shift] = String[I];
+
+        // Capitalize any letters.
+        if (String[I - Shift] >= 'a'  &&  String[I - Shift] <= 'z')
+        {
+            String[I - Shift] = String[I - Shift] - 32;
+            continue;
+        }
+
+        // Remove punctuation.
+        if (strchr("!?.,'", String[I - Shift]))
+        {
+            ++Shift;
+            continue;
+        }
     }
-  }
+}
 
 
 /******************************************************************/
