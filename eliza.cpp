@@ -8,14 +8,12 @@
 // - Use STL.
 //   - Conjugates should be a std::map.
 
-/* - - - - Includes - - - - */
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
 
-/* - - - - Defines - - - - */
-#define Input_size 255
+constexpr int INPUT_SIZE = 255;
 
 // ********************************************************************
 
@@ -44,49 +42,55 @@ struct KeyElement
     // Pointer to next keyword element.
     struct KeyElement *nextPtr;
     // Pointer to response chain.
-    struct ResponseAnchor *Response_ptr;
+    struct ResponseAnchor *responsePtr;
     // The keyword itself.
-    char Keyword;
+    char keyword;
 };
 
 
-/****************************************************************/
-/* Substrcpy - Copy a portion of a string to another string.    */
-/*   Input:  Fstr - String from which copying will be done      */
-/*           Start - Position in Fstr to start at (0 is first)  */
-/*           Len - Length of portion to copy                    */
-/*           Tstr - String to which portion will be copied      */
-/*           Null - Yes = Add null to end, No = don't           */
-/*   Output: Tstr is updated                                    */
-/****************************************************************/
+// ********************************************************************
+// Substrcpy - Copy a portion of a string to another string.
+// Input: fromString - String from which copying will be done
+//        start - Position in Fstr to start at (0 is first)
+//        length - Length of portion to copy
+//        toString - String to which portion will be copied
+//        nullTerminate - true = Add null to end, false = don't
+// Output: toString is updated
+
 void Substrcpy(
-    char *Fstr, int Start, int Len, char *Tstr, bool nullTerminate)
+    const char *fromString,
+    int start,
+    int length,
+    char *toString,
+    bool nullTerminate)
 {
     int I;
 
-    /* For each character in Fstr from Start for Len, copy to Tstr */
-    for (I = 0; Fstr[Start + I]  &&  I < Len; ++I)
+    // For each character in fromString from start for length, copy to
+    // toString.
+    for (I = 0; fromString[start + I]  &&  I < length; ++I)
     {
-        Tstr[I] = Fstr[Start + I];
+        toString[I] = fromString[start + I];
     }
 
     /* If null requested, add it */
     if (nullTerminate)
-        Tstr[I] = '\0';
+        toString[I] = '\0';
 }
 
 
-/****************************************************************/
-/* Remus - Remove underscores, replace with spaces              */
-/*   Input:  String - String to remove underscores from         */
-/*   Output: String - No more underscores                       */
-/****************************************************************/
-void Remus(char *String)
+// ********************************************************************
+// Remus - Remove underscores, replace with spaces
+//   Input: string - String to remove underscores from
+//   Output: string - No more underscores
+
+void Remus(char *string)
 {
-    for (unsigned I = 0; I < strlen(String); ++I)
+	// For each character, if it's an underscore, replace with space.
+    for (unsigned I = 0; I < strlen(string); ++I)
     {
-        if (String[I] == '_')
-            String[I] = ' ';
+        if (string[I] == '_')
+            string[I] = ' ';
     }
 }
 
@@ -302,7 +306,7 @@ void Get_response(char *Input, struct KeyElement *Keyhead_ptr)
     int Concat_pos;
     struct KeyElement *currPtr;
     struct KeyElement *Key_ptr = NULL;
-    char Temp[Input_size];
+    char Temp[INPUT_SIZE];
 
     // Remove newline from the end.
     len = strlen(Input);
@@ -339,14 +343,14 @@ void Get_response(char *Input, struct KeyElement *Keyhead_ptr)
         for (I = 0; I < strlen(Input)  &&  !Found; ++I)
         {
             /* If found in string */
-            if (Strcmp2(&(currPtr -> Keyword), &(Input[I])))
+            if (Strcmp2(&(currPtr -> keyword), &(Input[I])))
             {  /* Break out of the loop, save position in keyword chain */
                 Found = true;
                 Key_ptr = currPtr;
             }
 
             /* If we've reached the NOTFOUND keyword */
-            if (Strcmp2(&(currPtr -> Keyword), "NOTFOUND"))
+            if (Strcmp2(&(currPtr -> keyword), "NOTFOUND"))
             {  /* Set the Key_ptr in case we leave */
                 Key_ptr = currPtr;
             }
@@ -357,18 +361,18 @@ void Get_response(char *Input, struct KeyElement *Keyhead_ptr)
     if (Key_ptr)
     {  /* Continue */
         /* Get current response to work string */
-        strcpy(Temp, &(Key_ptr -> Response_ptr -> currPtr -> response));
+        strcpy(Temp, &(Key_ptr -> responsePtr -> currPtr -> response));
 
         /* Move to next response */
-        if (Key_ptr -> Response_ptr -> currPtr -> nextPtr)
+        if (Key_ptr -> responsePtr -> currPtr -> nextPtr)
         {
-            Key_ptr->Response_ptr->currPtr =
-                    Key_ptr->Response_ptr->currPtr->nextPtr;
+            Key_ptr->responsePtr->currPtr =
+                    Key_ptr->responsePtr->currPtr->nextPtr;
         }
         else  /* Move back to head if out of responses */
         {
-            Key_ptr->Response_ptr->currPtr =
-                    Key_ptr->Response_ptr->headPtr;
+            Key_ptr->responsePtr->currPtr =
+                    Key_ptr->responsePtr->headPtr;
         }
 
         /* If a concatenation is required */
@@ -384,10 +388,10 @@ void Get_response(char *Input, struct KeyElement *Keyhead_ptr)
             --I;
 
             /* Conjugate Input after keyword to end */
-            Conjugate(Input, I + strlen(&(Key_ptr -> Keyword)) - 1);
+            Conjugate(Input, I + strlen(&(Key_ptr -> keyword)) - 1);
 
             /* Attach rest of Input after keyword to the end of Temp */
-            strcat(Temp, &(Input[I + strlen(&(Key_ptr -> Keyword))]));
+            strcat(Temp, &(Input[I + strlen(&(Key_ptr -> keyword))]));
 
             /* Remove extra space at concat position (if any) */
             if (Temp[Concat_pos + 1] == ' ')
@@ -414,7 +418,7 @@ void Get_response(char *Input, struct KeyElement *Keyhead_ptr)
 struct KeyElement *Eliza_init(const char *Filename)
 {
     FILE *Response_file;
-    char Work_string[Input_size];
+    char Work_string[INPUT_SIZE];
     struct KeyElement *headPtr = NULL;
     struct KeyElement *Curr_key_ptr = NULL;
     struct KeyElement *Prev_ptr = NULL;
@@ -434,7 +438,7 @@ struct KeyElement *Eliza_init(const char *Filename)
     }
 
     /* Read each record, and build a linked list */
-    while (fgets(Work_string, Input_size, Response_file) != NULL  &&  !Done)
+    while (fgets(Work_string, INPUT_SIZE, Response_file) != NULL  &&  !Done)
     {
         /* Do appropriate work based on first character of string */
         switch (*Work_string)
@@ -467,7 +471,7 @@ struct KeyElement *Eliza_init(const char *Filename)
             /* Copy the keyword into the new element on chain losing the */
             /* first character. */
             Substrcpy(Work_string, 1, strlen(Work_string) - 2,
-                      &(Curr_key_ptr -> Keyword), true);
+                      &(Curr_key_ptr -> keyword), true);
 
             /* If we have been doing responses */
             if (Mode == Response)
@@ -488,7 +492,7 @@ struct KeyElement *Eliza_init(const char *Filename)
             }
 
             /* Point to current response anchor */
-            Curr_key_ptr -> Response_ptr = ResponseAnchor_ptr;
+            Curr_key_ptr -> responsePtr = ResponseAnchor_ptr;
             Curr_key_ptr -> nextPtr = NULL;
 
             /* Point previous element to this element */
@@ -575,10 +579,10 @@ void Format(struct KeyElement *Key_head)
     /* For each keyword */
     for (currPtr = Key_head; currPtr; currPtr = currPtr -> nextPtr)
     {
-        printf("%s\n", &(currPtr -> Keyword));
+        printf("%s\n", &(currPtr -> keyword));
 
         /* Format responses */
-        for (Response_ptr = currPtr -> Response_ptr -> headPtr;
+        for (Response_ptr = currPtr -> responsePtr -> headPtr;
              Response_ptr;
              Response_ptr = Response_ptr -> nextPtr)
         {
@@ -592,7 +596,7 @@ void Format(struct KeyElement *Key_head)
 int main(int argc, char *argv[])
 {
 	// Buffer for I/O.
-    char Work_string[Input_size];
+    char Work_string[INPUT_SIZE];
     /* Pointer to head of response chain */
     struct KeyElement *Key_head;
     /* Response file name */
