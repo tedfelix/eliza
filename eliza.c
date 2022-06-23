@@ -607,96 +607,98 @@ struct Key_element *Key_head;
 
 void main(int argc, char *argv[])
 {
-  /* - - - - Local Data - - - - */
-  char Work_string[Input_size];  /* Buffer for I/O */
-  struct Key_element *Key_head;  /* Pointer to head of response chain */
-  char Filename[128];            /* Response file name */
+	// Buffer for I/O.
+    char Work_string[Input_size];
+    struct Key_element *Key_head;  /* Pointer to head of response chain */
+    char Filename[128];            /* Response file name */
 
-  /* Logging vars */
-  int Log = false;               /* Logging indication flag */
-  FILE *Log_file;                /* Log file session pointer */
+    /* Logging vars */
+    int Log = false;               /* Logging indication flag */
+    FILE *Log_file;                /* Log file session pointer */
 
-  /* Time and Date stuff for logging */
-  time_t T;
-  struct tm *Local;
+    /* Time and Date stuff for logging */
+    time_t T;
+    struct tm *Local;
 
-  /* - - - - Program Begins - - - - */
-
-  /* If a command line argument was passed */
-  if (argc > 1)
+  
+    /* If a command line argument was passed */
+    if (argc > 1)
     {
-    strcpy(Filename, argv[1]);
+        strcpy(Filename, argv[1]);
 
-    /* Use default extension if none specified */
-    if (!strchr(Filename, '.'))
-      strcat(Filename, ".elz");
+        /* Use default extension if none specified */
+        if (!strchr(Filename, '.'))
+           strcat(Filename, ".elz");
     }
-  else  /* Use default file name */
-    strcpy(Filename, "standard.elz");
-
-  Key_head = Eliza_init(Filename);
-
-  /* If open was successful */
-  if (Key_head)
+    else  /* Use default file name */
     {
+        strcpy(Filename, "standard.elz");
+    }
+
+    Key_head = Eliza_init(Filename);
+
+    /* If open failed, bail. */
+    if (!Key_head)
+        return;
+
+    // Processing loop...
     for ( ;; )
-      {
-      /* Print user prompt */
-      printf("> ");
+    {
+        /* Print user prompt */
+        printf("> ");
 
-      /* Get user input */
-      //Input(Work_string, 255);
-      fgets(Work_string, 255, stdin);
+        /* Get user input */
+        //Input(Work_string, 255);
+        fgets(Work_string, 255, stdin);
 
-      /* If this is the "logf" command, start logging */
-      if (Strcmp2("logf", Work_string))
+        /* If this is the "logf" command, start logging */
+        if (Strcmp2("logf", Work_string))
         {
-        Log = true;   /* Indicate logging enabled */
+            Log = true;   /* Indicate logging enabled */
 
-        /* Open log file for append */
-        Log_file = fopen(&Work_string[5], "a");
+            /* Open log file for append */
+            Log_file = fopen(&Work_string[5], "a");
 
-        /* Handle any open errors */
-        if (Log_file == NULL)
-          {
-          perror(&Work_string[5]);
-          Log = false;
-          }
+            /* Handle any open errors */
+            if (Log_file == NULL)
+            {
+                perror(&Work_string[5]);
+                Log = false;
+            }
+            else
+            {
+                fprintf(Log_file, "\n*******************************************************************************\n");
+//                fprintf(Log_file,
+//                        "Logging started, %02d/%02d/%d  ",
+//                        Dos_date.da_mon, Dos_date.da_day, Dos_date.da_year);
+//                fprintf(Log_file,
+//                        "%02d:%02d,  Responses: %s\n\n",
+//                        Dos_time.ti_hour, Dos_time.ti_min, Filename);
+            }
+        }
         else
-          {
-          fprintf(Log_file, "\n*******************************************************************************\n");
-//          fprintf(Log_file,
-//                  "Logging started, %02d/%02d/%d  ",
-//                  Dos_date.da_mon, Dos_date.da_day, Dos_date.da_year);
-//          fprintf(Log_file,
-//                  "%02d:%02d,  Responses: %s\n\n",
-//                  Dos_time.ti_hour, Dos_time.ti_min, Filename);
-          }
-        }
-      else
         {
-        /* If logging is on, write user's input to log file */
-        if (Log)
-          {
-          fprintf(Log_file, "> ");
-          fputs(Work_string, Log_file);
-          fprintf(Log_file, "\n");
-          }
+            /* If logging is on, write user's input to log file */
+            if (Log)
+            {
+                fprintf(Log_file, "> ");
+                fputs(Work_string, Log_file);
+                fprintf(Log_file, "\n");
+            }
 
-        /* Get Eliza's response to user input */
-        Get_response(Work_string, Key_head);
+            /* Get Eliza's response to user input */
+            Get_response(Work_string, Key_head);
 
-        /* Log response if logging is on */
-        if (Log)
-          {
-          fputs(Work_string, Log_file);
-          fprintf(Log_file, "\n");
-          }
+            /* Log response if logging is on */
+            if (Log)
+            {
+                fputs(Work_string, Log_file);
+                fprintf(Log_file, "\n");
+            }
 
-        /* Display response to user */
-        puts(Work_string);
+            /* Display response to user */
+            puts(Work_string);
         }
-      }
-    };
+    }
 }
 
