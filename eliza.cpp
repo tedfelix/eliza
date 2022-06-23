@@ -116,9 +116,7 @@ void Substrcpy(
 /****************************************************************/
 void Remus(char *String)
 {
-    int I;
-
-    for (I = 0; I < strlen(String); ++I)
+    for (unsigned I = 0; I < strlen(String); ++I)
     {
         if (String[I] == '_')
             String[I] = ' ';
@@ -133,10 +131,9 @@ void Remus(char *String)
 /****************************************************************/
 void Clean(char *String)
 {
-    int I;
     int Shift = 0;
 
-    for (I = 0; I < strlen(String) + 1; ++I)
+    for (unsigned I = 0; I < strlen(String) + 1; ++I)
     {
         // Deal with dropped characters.
         String[I - Shift] = String[I];
@@ -167,12 +164,10 @@ void Clean(char *String)
 /******************************************************************/
 void Strshift(char *String, int Start, int Amt)
 {
-    int I;
-
     // Shift left.
     if (Amt < 0)
     {
-        for (I = Start; (I - Amt) <= strlen(String); ++I)
+        for (unsigned I = Start; (I - Amt) <= strlen(String); ++I)
         {
             String[I] = String[I - Amt];
         }
@@ -182,12 +177,12 @@ void Strshift(char *String, int Start, int Amt)
     // Shift right.
     if (Amt > 0)
     {
-        for (I = strlen(String); I >= Start; --I)
+        for (int I = strlen(String); I >= Start; --I)
         {
             String[I + Amt] = String[I];
         }
         // Backfill with spaces.
-        for (I = Start; I < Start + Amt; ++I)
+        for (int I = Start; I < Start + Amt; ++I)
         {
             String[I] = ' ';
         }
@@ -233,9 +228,7 @@ int Strcmp2(const char *Keyword, const char *String)
 /******************************************************************/
 void Conjugate(char *String, int Start)
 {
-    int I;
-
-    for (I = Start; I < strlen(String); ++I)
+    for (unsigned I = Start; I < strlen(String); ++I)
     {
         int X;
 
@@ -305,7 +298,7 @@ void Get_response(char *Input, struct Key_element *Keyhead_ptr)
 {
     int len;
     int Found = false;
-    int I;
+    unsigned I;
     int Concat_pos;
     struct Key_element *currPtr;
     struct Key_element *Key_ptr = NULL;
@@ -610,9 +603,9 @@ int main(int argc, char *argv[])
     /* Log file session pointer */
     FILE *Log_file;
     /* Time and Date stuff for logging */
-    time_t T;
-    struct tm *Local;
-  
+    //time_t T;
+    //struct tm *Local;
+
     /* If a command line argument was passed */
     if (argc > 1)
     {

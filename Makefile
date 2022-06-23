@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++11 -Wall -Wextra -Wundef # -Werror
+CXXFLAGS = -std=c++11 -Wall -Wextra -Wundef -Werror
 
 targets = eliza
 
