@@ -572,36 +572,25 @@ struct Key_element *Eliza_init(const char *Filename)
 // ********************************************************************
 
 /* Debugging routine to format keyword/response chains */
-void Format(Key_head)
-struct Key_element *Key_head;
-  {
-  struct Key_element *currPtr;
-  struct ResponseElement *Response_ptr;
+void Format(struct Key_element *Key_head)
+{
+    struct Key_element *currPtr;
+    struct ResponseElement *Response_ptr;
 
-  /* - - - - Program Begins - - - - */
-
-  /* For each keyword */
-  for (currPtr = Key_head; currPtr; currPtr = currPtr -> nextPtr)
+    /* For each keyword */
+    for (currPtr = Key_head; currPtr; currPtr = currPtr -> nextPtr)
     {
-    printf("%s\n", &(currPtr -> Keyword));
+        printf("%s\n", &(currPtr -> Keyword));
 
-/*    printf("  Response anchor addr: %X:%X\n",
-           FP_SEG(currPtr -> Response_ptr),
-           FP_OFF(currPtr -> Response_ptr));
-    printf("  Response anchor Head: %X:%X\n",
-           FP_SEG(currPtr -> Response_ptr -> headPtr),
-           FP_OFF(currPtr -> Response_ptr -> headPtr));
-    printf("  Response anchor Curr: %X:%X\n",
-           FP_SEG(currPtr -> Response_ptr -> currPtr),
-           FP_OFF(currPtr -> Response_ptr -> currPtr));
-*/
-    /* Format responses */
-    for (Response_ptr = currPtr -> Response_ptr -> headPtr;
-         Response_ptr;
-         Response_ptr = Response_ptr -> nextPtr)
-      printf("   - %s\n", &(Response_ptr -> Response));
+        /* Format responses */
+        for (Response_ptr = currPtr -> Response_ptr -> headPtr;
+             Response_ptr;
+             Response_ptr = Response_ptr -> nextPtr)
+        {
+            printf("   - %s\n", &(Response_ptr -> Response));
+        }
     }
-  }
+}
 
 // ********************************************************************
 
