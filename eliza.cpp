@@ -6,6 +6,7 @@
 // TODO
 // - Use std::string.
 // - Use STL.
+//   - Conjugates should be a std::map.
 
 /* - - - - Includes - - - - */
 #include <stdlib.h>
@@ -26,7 +27,7 @@
 struct ResponseElement
 {
     struct ResponseElement *nextPtr;  /* Pointer to next response */
-    char Response;  /* The response text */
+    char response;  /* The response text */
 };
 
 struct ResponseAnchor
@@ -38,49 +39,15 @@ struct ResponseAnchor
 };
 
 /* Keyword element definition. */
-struct Key_element
+struct KeyElement
 {
     // Pointer to next keyword element.
-    struct Key_element *nextPtr;
+    struct KeyElement *nextPtr;
     // Pointer to response chain.
     struct ResponseAnchor *Response_ptr;
     // The keyword itself.
     char Keyword;
 };
-
-
-/* These are the conversions that need to be done to certain words */
-/* used by the user.  This makes Eliza seem remotely intelligent.  */
-/* One exception is with YOU to I.  In many cases, YOU should be   */
-/* converted to ME when Eliza talks back:                          */
-/* User:  I am depending on you.                                   */
-/* Eliza: Do you find it normal to be depending on me?             */
-/*                                                                 */
-/*   Other times, I is more appropriate:                           */
-/* User:  I see what you should do.                                */
-/* Eliza: Do you often-times see what I should do?                 */
-/*   Alas, this is not real artificial intelligence, so we give up */
-/* and always convert loose YOUs to Is.                            */
-/*                                                                 */
-/* Some rules for future thought:                                  */
-/*   Prepositional phrases:  YOU becomes ME  (on YOU -> on ME)     */
-/*   Interrogative phrases:  YOU becomes I  (what YOU -> what I)   */
-/*   To-verb phrases:  YOU becomes ME (to be YOU -> to be ME)      */
-#define Num_conj 13
-static char Conjugates[Num_conj][2][11] =
-  {{" YOU WERE ", " I WAS "},
-   {" YOU ARE ",  " I AM "},
-   {" I ",        " YOU "},  // Converting You to I is not always good.
-   {" YOURS ",    " MINE "},
-   {" YOUR ",     " MY "},
-   {" YOURE ",    " IM "},
-   {" IVE ",      " YOUVE "},
-   {" MYSELF ",   " YOURSELF "},
-   {" ME ",       " !YOU "},   // Exclamation point forces these to
-   {" OUR ",      " !YOUR "},  // convert left to right only.
-   {" OURS ",     " !YOURS "},
-   {" MOM ",      " !MOTHER "},
-   {" DAD ",      " !FATHER "}};
 
 
 /****************************************************************/
@@ -220,6 +187,39 @@ bool Strcmp2(const char *Keyword, const char *String)
 }
 
 
+/* These are the conversions that need to be done to certain words */
+/* used by the user.  This makes Eliza seem remotely intelligent.  */
+/* One exception is with YOU to I.  In many cases, YOU should be   */
+/* converted to ME when Eliza talks back:                          */
+/* User:  I am depending on you.                                   */
+/* Eliza: Do you find it normal to be depending on me?             */
+/*                                                                 */
+/*   Other times, I is more appropriate:                           */
+/* User:  I see what you should do.                                */
+/* Eliza: Do you often-times see what I should do?                 */
+/*   Alas, this is not real artificial intelligence, so we give up */
+/* and always convert loose YOUs to Is.                            */
+/*                                                                 */
+/* Some rules for future thought:                                  */
+/*   Prepositional phrases:  YOU becomes ME  (on YOU -> on ME)     */
+/*   Interrogative phrases:  YOU becomes I  (what YOU -> what I)   */
+/*   To-verb phrases:  YOU becomes ME (to be YOU -> to be ME)      */
+#define Num_conj 13
+char Conjugates[Num_conj][2][11] =
+  {{" YOU WERE ", " I WAS "},
+   {" YOU ARE ",  " I AM "},
+   {" I ",        " YOU "},  // Converting You to I is not always good.
+   {" YOURS ",    " MINE "},
+   {" YOUR ",     " MY "},
+   {" YOURE ",    " IM "},
+   {" IVE ",      " YOUVE "},
+   {" MYSELF ",   " YOURSELF "},
+   {" ME ",       " !YOU "},   // Exclamation point forces these to
+   {" OUR ",      " !YOUR "},  // convert left to right only.
+   {" OURS ",     " !YOURS "},
+   {" MOM ",      " !MOTHER "},
+   {" DAD ",      " !FATHER "}};
+
 /******************************************************************/
 /* Conjugate - Conjugates a string                                */
 /*   Input:  String - String to conjugate                         */
@@ -294,14 +294,14 @@ void Conjugate(char *String, int Start)
 /*    Input:  Input - Input text to respond to                  */
 /*    Output: Input - Response                                  */
 /****************************************************************/
-void Get_response(char *Input, struct Key_element *Keyhead_ptr)
+void Get_response(char *Input, struct KeyElement *Keyhead_ptr)
 {
     int len;
     bool Found = false;
     unsigned I;
     int Concat_pos;
-    struct Key_element *currPtr;
-    struct Key_element *Key_ptr = NULL;
+    struct KeyElement *currPtr;
+    struct KeyElement *Key_ptr = NULL;
     char Temp[Input_size];
 
     // Remove newline from the end.
@@ -357,7 +357,7 @@ void Get_response(char *Input, struct Key_element *Keyhead_ptr)
     if (Key_ptr)
     {  /* Continue */
         /* Get current response to work string */
-        strcpy(Temp, &(Key_ptr -> Response_ptr -> currPtr -> Response));
+        strcpy(Temp, &(Key_ptr -> Response_ptr -> currPtr -> response));
 
         /* Move to next response */
         if (Key_ptr -> Response_ptr -> currPtr -> nextPtr)
@@ -411,13 +411,13 @@ void Get_response(char *Input, struct Key_element *Keyhead_ptr)
 /*    Input:  Filename - Name of keyword/response file          */
 /*    Output: Eliza_Init - Pointer to head of keyword chain     */
 /****************************************************************/
-struct Key_element *Eliza_init(const char *Filename)
+struct KeyElement *Eliza_init(const char *Filename)
 {
     FILE *Response_file;
     char Work_string[Input_size];
-    struct Key_element *headPtr = NULL;
-    struct Key_element *Curr_key_ptr = NULL;
-    struct Key_element *Prev_ptr = NULL;
+    struct KeyElement *headPtr = NULL;
+    struct KeyElement *Curr_key_ptr = NULL;
+    struct KeyElement *Prev_ptr = NULL;
     struct ResponseAnchor *ResponseAnchor_ptr = NULL;
     struct ResponseElement *Response_ptr = NULL;
     bool Done = false;
@@ -459,8 +459,8 @@ struct Key_element *Eliza_init(const char *Filename)
             /* don't want newline           -1 */
             /* don't want control char      -1 */
             /*        TOTAL . . . . . . . . -2 */
-            Curr_key_ptr = (struct Key_element *)
-                malloc(sizeof(struct Key_element) + strlen(Work_string) - 2);
+            Curr_key_ptr = (struct KeyElement *)
+                malloc(sizeof(struct KeyElement) + strlen(Work_string) - 2);
 
             if (!headPtr) headPtr = Curr_key_ptr;
 
@@ -514,7 +514,7 @@ struct Key_element *Eliza_init(const char *Filename)
 
                 /* Copy response text into new element */
                 Substrcpy(Work_string, 1, strlen(Work_string) - 2,
-                          &(Response_ptr -> Response), true);
+                          &(Response_ptr -> response), true);
 
                 /* Point new element to NULL */
                 Response_ptr -> nextPtr = NULL;
@@ -567,9 +567,9 @@ struct Key_element *Eliza_init(const char *Filename)
 // ********************************************************************
 
 /* Debugging routine to format keyword/response chains */
-void Format(struct Key_element *Key_head)
+void Format(struct KeyElement *Key_head)
 {
-    struct Key_element *currPtr;
+    struct KeyElement *currPtr;
     struct ResponseElement *Response_ptr;
 
     /* For each keyword */
@@ -582,7 +582,7 @@ void Format(struct Key_element *Key_head)
              Response_ptr;
              Response_ptr = Response_ptr -> nextPtr)
         {
-            printf("   - %s\n", &(Response_ptr -> Response));
+            printf("   - %s\n", &(Response_ptr -> response));
         }
     }
 }
@@ -594,7 +594,7 @@ int main(int argc, char *argv[])
 	// Buffer for I/O.
     char Work_string[Input_size];
     /* Pointer to head of response chain */
-    struct Key_element *Key_head;
+    struct KeyElement *Key_head;
     /* Response file name */
     char Filename[128];
 
