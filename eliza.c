@@ -1,5 +1,7 @@
 /* Eliza version 2.10  by: Ted Felix.  */
 /* A port to something more modern started 10/1/2015. */
+// Continuation of this work, June 2022.  See the git repo for
+// more details!
 
 /* - - - - Includes - - - - */
 #include <stdlib.h>
