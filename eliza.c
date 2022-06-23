@@ -596,7 +596,7 @@ void Format(struct Key_element *Key_head)
 
 // ********************************************************************
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	// Buffer for I/O.
     char Work_string[Input_size];
@@ -631,7 +631,7 @@ void main(int argc, char *argv[])
 
     /* If open failed, bail. */
     if (!Key_head)
-        return;
+        return 1;
 
     // Processing loop...
     for ( ;; )
@@ -676,11 +676,11 @@ void main(int argc, char *argv[])
         }
 
         if (Strcmp2("bye", Work_string))
-            return;
+            return 0;
         if (Strcmp2("exit", Work_string))
-            return;
+            return 0;
         if (Strcmp2("quit", Work_string))
-            return;
+            return 0;
 
         /* If logging is on, write user's input to log file */
         if (Log)
