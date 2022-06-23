@@ -646,6 +646,9 @@ void main(int argc, char *argv[])
         {
             Log = true;   /* Indicate logging enabled */
 
+            // Remove the trailing \n.
+            Work_string[strlen(Work_string) - 1] = 0;
+
             /* Open log file for append */
             Log_file = fopen(&Work_string[5], "a");
 
@@ -664,31 +667,41 @@ void main(int argc, char *argv[])
 //                fprintf(Log_file,
 //                        "%02d:%02d,  Responses: %s\n\n",
 //                        Dos_time.ti_hour, Dos_time.ti_min, Filename);
+                fflush(Log_file);
             }
+
+            continue;
         }
-        else
+
+        if (Strcmp2("bye", Work_string))
+            return;
+        if (Strcmp2("exit", Work_string))
+            return;
+        if (Strcmp2("quit", Work_string))
+            return;
+
+        /* If logging is on, write user's input to log file */
+        if (Log)
         {
-            /* If logging is on, write user's input to log file */
-            if (Log)
-            {
-                fprintf(Log_file, "> ");
-                fputs(Work_string, Log_file);
-                fprintf(Log_file, "\n");
-            }
-
-            /* Get Eliza's response to user input */
-            Get_response(Work_string, Key_head);
-
-            /* Log response if logging is on */
-            if (Log)
-            {
-                fputs(Work_string, Log_file);
-                fprintf(Log_file, "\n");
-            }
-
-            /* Display response to user */
-            puts(Work_string);
+            fprintf(Log_file, "> ");
+            fputs(Work_string, Log_file);
+            fprintf(Log_file, "\n");
+            fflush(Log_file);
         }
+
+        /* Get Eliza's response to user input */
+        Get_response(Work_string, Key_head);
+
+        /* Log response if logging is on */
+        if (Log)
+        {
+            fputs(Work_string, Log_file);
+            fprintf(Log_file, "\n");
+            fflush(Log_file);
+        }
+
+        /* Display response to user */
+        puts(Work_string);
     }
 }
 
