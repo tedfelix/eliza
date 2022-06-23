@@ -18,6 +18,10 @@ $ELIZA v2.10  By: Ted Felix
 " wider variety of keywords, and responses thus making Eliza a tad bit
 " more stimulating.  There is much room for improvement, however.
 
+!THIS IS
+-ARE YOU CERTAIN THAT IS*
+-WHY DO YOU SUPPOSE THAT IS*
+-TELL ME MORE ABOUT HOW THAT IS*
 !CAN YOU
 -DONT YOU BELIEVE THAT I CAN*
 -PERHAPS YOU WOULD LIKE TO BE ABLE TO*
@@ -54,11 +58,17 @@ $ELIZA v2.10  By: Ted Felix
 !I KNOW
 -Tell me more about this.
 -You seem certain of the facts, go on.
+!I LIKED
 !I LIKE
+!I REALLY LIKED
 !I REALLY LIKE
+!I ENJOYED
 !I ENJOY
+!I REALLY ENJOYED
 !I REALLY ENJOY
+!I LOVED
 !I LOVE
+!I REALLY LOVED
 !I REALLY LOVE
 -HAVE YOU ALWAYS ENJOYED*
 -Do you think this is a fetish?
@@ -95,11 +105,24 @@ $ELIZA v2.10  By: Ted Felix
 -DO YOU ENJOY BEING*
 !I WANT_
 !I WOULD LIKE
+!I NEED
+!I DESIRE
 -WHAT WOULD IT MEAN TO YOU IF YOU GOT*
 -WHY DO YOU WANT*
 -SUPPOSE YOU SOON GOT*
 -WHAT IF YOU NEVER GOT*
 -I SOMETIMES ALSO WANT*
+!I SEE
+!I SAW
+!I HAVE SEEN
+-Maybe you need your eyes checked.
+-MANY PEOPLE HAVE SEEN*
+-I can refer you to an optometrist.
+-WHEREVER YOU LOOK, THERE'S A CHANCE YOU'LL SEE MORE*
+!I LOOKED
+!I LOOK
+-But what else have you seen?
+-DOES IT BOTHER YOU THAT YOU LOOK*
 !_WHAT_
 !_HOW_
 !_WHO_
@@ -158,6 +181,9 @@ $ELIZA v2.10  By: Ted Felix
 -What are you thinking of?
 -Really, always?
 !I THINK
+!I THOUGHT
+!I BELIEVED
+!I BELIEVE
 -Do you really think so?
 -BUT YOU ARE NOT SURE THAT*
 -DO YOU DOUBT*
@@ -231,6 +257,12 @@ $ELIZA v2.10  By: Ted Felix
 -I have heard things about you from others.
 -Don't turn around now.
 -DUCK!
+!COW
+!BEEF
+-Moo!
+-I could really go for a hamburger right now.
+!BOWL
+-I'm the oatmeal!
 
 "Positives and negatives
 !_YES_
