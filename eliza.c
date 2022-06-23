@@ -416,158 +416,158 @@ void Get_response(char *Input, struct Key_element *Keyhead_ptr)
 /*    Input:  Filename - Name of keyword/response file          */
 /*    Output: Eliza_Init - Pointer to head of keyword chain     */
 /****************************************************************/
-struct Key_element *Eliza_init(Filename)
-char *Filename;
-  {
-  /* - - - - Local Data - - - - */
-  FILE *Response_file;
-  char Work_string[Input_size];
-  struct Key_element *headPtr = NULL, *Curr_key_ptr, *Prev_ptr = NULL;
-  struct ResponseAnchor *ResponseAnchor_ptr = NULL;
-  struct ResponseElement *Response_ptr = NULL;
-  int Done = false;
-  int Title = false;
-  enum {Response, Keyword} Mode = Response;
+struct Key_element *Eliza_init(const char *Filename)
+{
+    FILE *Response_file;
+    char Work_string[Input_size];
+    struct Key_element *headPtr = NULL;
+    struct Key_element *Curr_key_ptr = NULL;
+    struct Key_element *Prev_ptr = NULL;
+    struct ResponseAnchor *ResponseAnchor_ptr = NULL;
+    struct ResponseElement *Response_ptr = NULL;
+    int Done = false;
+    int Title = false;
+    enum { Response, Keyword } Mode = Response;
 
-  /* - - - - Program Begins - - - - */
+    /* Open the eliza response file */
+    Response_file = fopen(Filename, "r");
 
-  /* Open the eliza response file */
-  Response_file = fopen(Filename, "r");
-
-  if (Response_file == NULL)
-    perror(Filename);
-
-  /* Read each record, and build a linked list */
-  while (fgets(Work_string, Input_size, Response_file) != NULL  &&  !Done)
+    if (Response_file == NULL)
     {
-    /* Do appropriate work based on first character of string */
-    switch (*Work_string)
-      {
-      /* Title line */
-      case '$':
-        {  /* Write to screen */
-        printf("%s", &Work_string[1]);
-        Title = true;
+        perror(Filename);
+        return NULL;
+    }
 
-        break;
-        };
-
-      /* Keyword */
-      case '!':
-        {  /* Add to keyword chain */
-        /* Convert underscores to blanks */
-        Remus(Work_string);
-
-        /* Allocation size explanation:    */
-        /* sizeof includes dummy char   -1 for Turbo, -2 for MS */
-        /* strlen doesn't include null  +1 */
-        /* don't want newline           -1 */
-        /* don't want control char      -1 */
-        /*        TOTAL . . . . . . . . -2 */
-        Curr_key_ptr = (struct Key_element *)
-          malloc(sizeof(struct Key_element) + strlen(Work_string) - 2);
-
-        if (!headPtr) headPtr = Curr_key_ptr;
-
-        /* Copy the keyword into the new element on chain losing the */
-        /* first character. */
-        Substrcpy(Work_string, 1, strlen(Work_string) - 2,
-                  &(Curr_key_ptr -> Keyword), Yes);
-
-        /* If we have been doing responses */
-        if (Mode == Response)
-          {  /* Allocate a new response anchor */
-          /* Set old response anchor curr_ptr to head of chain */
-          if (ResponseAnchor_ptr)
-            ResponseAnchor_ptr -> currPtr =
-              ResponseAnchor_ptr -> headPtr;
-
-          /* Indicate we are now doing keywords */
-          Mode = Keyword;
-
-          /* Allocate a new response anchor, make it the current */
-          ResponseAnchor_ptr = (struct ResponseAnchor *)
-            malloc(sizeof(struct ResponseAnchor));
-          ResponseAnchor_ptr -> headPtr = NULL;
-          ResponseAnchor_ptr -> currPtr = NULL;
-          };
-
-        /* Point to current response anchor */
-        Curr_key_ptr -> Response_ptr = ResponseAnchor_ptr;
-        Curr_key_ptr -> nextPtr = NULL;
-
-        /* Point previous element to this element */
-        if (Prev_ptr) Prev_ptr -> nextPtr = Curr_key_ptr;
-
-        /* Update ptr to previous element */
-        Prev_ptr = Curr_key_ptr;
-
-        break;
-        };  /* case Keyword */
-
-      /* Response text */
-      case '-':
+    /* Read each record, and build a linked list */
+    while (fgets(Work_string, Input_size, Response_file) != NULL  &&  !Done)
+    {
+        /* Do appropriate work based on first character of string */
+        switch (*Work_string)
         {
-        /* Indicate we are now doing responses */
-        Mode = Response;
+        /* Title line */
+        case '$':
+            /* Write to screen */
+            printf("%s", &Work_string[1]);
+            Title = true;
 
-        /* Add to current response chain */
-        if (ResponseAnchor_ptr)
-          {
-          /* Allocate a response element */
-          Response_ptr = (struct ResponseElement *)
-            malloc(sizeof(struct ResponseElement) + strlen(Work_string) - 2);
+            break;
 
-          /* Copy response text into new element */
-          Substrcpy(Work_string, 1, strlen(Work_string) - 2,
-                    &(Response_ptr -> Response), Yes);
+        /* Keyword */
+        case '!':
+            /* Add to keyword chain */
+            /* Convert underscores to blanks */
+            Remus(Work_string);
 
-          /* Point new element to NULL */
-          Response_ptr -> nextPtr = NULL;
+            /* Allocation size explanation:    */
+            /* sizeof includes dummy char   -1 for Turbo, -2 for MS */
+            /* strlen doesn't include null  +1 */
+            /* don't want newline           -1 */
+            /* don't want control char      -1 */
+            /*        TOTAL . . . . . . . . -2 */
+            Curr_key_ptr = (struct Key_element *)
+                malloc(sizeof(struct Key_element) + strlen(Work_string) - 2);
 
-          /* If this is an empty chain, init */
-          if (!(ResponseAnchor_ptr -> headPtr))
-            {
-            /* Point head and curr ptrs to new element */
-            ResponseAnchor_ptr -> headPtr = Response_ptr;
-            ResponseAnchor_ptr -> currPtr = Response_ptr;
+            if (!headPtr) headPtr = Curr_key_ptr;
+
+            /* Copy the keyword into the new element on chain losing the */
+            /* first character. */
+            Substrcpy(Work_string, 1, strlen(Work_string) - 2,
+                      &(Curr_key_ptr -> Keyword), Yes);
+
+            /* If we have been doing responses */
+            if (Mode == Response)
+            {  /* Allocate a new response anchor */
+                /* Set old response anchor curr_ptr to head of chain */
+                if (ResponseAnchor_ptr)
+                    ResponseAnchor_ptr -> currPtr =
+                            ResponseAnchor_ptr -> headPtr;
+
+                /* Indicate we are now doing keywords */
+                Mode = Keyword;
+
+                /* Allocate a new response anchor, make it the current */
+                ResponseAnchor_ptr = (struct ResponseAnchor *)
+                        malloc(sizeof(struct ResponseAnchor));
+                ResponseAnchor_ptr -> headPtr = NULL;
+                ResponseAnchor_ptr -> currPtr = NULL;
             }
-          else  /* Add an element, use currPtr to track tail */
+
+            /* Point to current response anchor */
+            Curr_key_ptr -> Response_ptr = ResponseAnchor_ptr;
+            Curr_key_ptr -> nextPtr = NULL;
+
+            /* Point previous element to this element */
+            if (Prev_ptr) Prev_ptr -> nextPtr = Curr_key_ptr;
+
+            /* Update ptr to previous element */
+            Prev_ptr = Curr_key_ptr;
+
+            break;
+
+        /* Response text */
+        case '-':
+            /* Indicate we are now doing responses */
+            Mode = Response;
+
+            /* Add to current response chain */
+            if (ResponseAnchor_ptr)
             {
-            /* Point old tail (currPtr) to new element */
-            ResponseAnchor_ptr -> currPtr -> nextPtr = Response_ptr;
+                /* Allocate a response element */
+                Response_ptr = (struct ResponseElement *)
+                        malloc(sizeof(struct ResponseElement) +
+                               strlen(Work_string) - 2);
 
-            /* Point curr_ptr in anchor to new element */
-            ResponseAnchor_ptr -> currPtr = Response_ptr;
-            }
-          }  /* Response anchor allocated */
+                /* Copy response text into new element */
+                Substrcpy(Work_string, 1, strlen(Work_string) - 2,
+                          &(Response_ptr -> Response), Yes);
 
-        break;
-        }  /* case Response text */
+                /* Point new element to NULL */
+                Response_ptr -> nextPtr = NULL;
 
-      }  /* switch (Work_string) */
+                /* If this is an empty chain, init */
+                if (!(ResponseAnchor_ptr -> headPtr))
+                {
+                    /* Point head and curr ptrs to new element */
+                    ResponseAnchor_ptr -> headPtr = Response_ptr;
+                    ResponseAnchor_ptr -> currPtr = Response_ptr;
+                }
+                else  /* Add an element, use currPtr to track tail */
+                {
+                    /* Point old tail (currPtr) to new element */
+                    ResponseAnchor_ptr -> currPtr -> nextPtr = Response_ptr;
+
+                    /* Point curr_ptr in anchor to new element */
+                    ResponseAnchor_ptr -> currPtr = Response_ptr;
+                }
+            }  /* Response anchor allocated */
+
+            break;
+
+        }  /* switch (Work_string) */
 
     }  /* while reading records from file */
 
-  /* Close the response file */
-  fclose(Response_file);
+    /* Close the response file */
+    fclose(Response_file);
 
-  /* If no title lines in .ELZ file and File was read successfully */
-  if (!Title  &&  headPtr)
+    /* If no title lines in .ELZ file and File was read successfully */
+    if (!Title  &&  headPtr)
     {  /* Display default title lines */
-    printf("ELIZA  v2.10\n");
-    printf("Adapted By: Ted Felix from the Creative Computing version\n\n");
-    printf("Hi!  I'm Eliza.  What's your problem?\n");
-    };
+        printf("ELIZA  v2.10\n");
+        printf("Adapted By: Ted Felix from the Creative Computing version\n\n");
+        printf("Hi!  I'm Eliza.  What's your problem?\n");
+    }
 
-  /* Set last response anchor curr_ptr to head of chain */
-  if (ResponseAnchor_ptr)
-    ResponseAnchor_ptr -> currPtr =
-      ResponseAnchor_ptr -> headPtr;
+    /* Set last response anchor curr_ptr to head of chain */
+    if (ResponseAnchor_ptr)
+    {
+        ResponseAnchor_ptr -> currPtr =
+                ResponseAnchor_ptr -> headPtr;
+    }
 
+    return(headPtr);
 
-  return(headPtr);
-  }  /* Eliza_init */
+}
 
 // ********************************************************************
 
@@ -609,17 +609,18 @@ void main(int argc, char *argv[])
 {
 	// Buffer for I/O.
     char Work_string[Input_size];
-    struct Key_element *Key_head;  /* Pointer to head of response chain */
-    char Filename[128];            /* Response file name */
+    /* Pointer to head of response chain */
+    struct Key_element *Key_head;
+    /* Response file name */
+    char Filename[128];
 
-    /* Logging vars */
-    int Log = false;               /* Logging indication flag */
-    FILE *Log_file;                /* Log file session pointer */
-
+    /* Logging indication flag */
+    int Log = false;
+    /* Log file session pointer */
+    FILE *Log_file;
     /* Time and Date stuff for logging */
     time_t T;
     struct tm *Local;
-
   
     /* If a command line argument was passed */
     if (argc > 1)
