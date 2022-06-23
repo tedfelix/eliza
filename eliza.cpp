@@ -3,6 +3,10 @@
 // Continuation of this work, June 2022.  See the git repo for
 // more details!
 
+// TODO
+// - Use std::string.
+// - Use STL.
+
 /* - - - - Includes - - - - */
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,8 +14,6 @@
 #include <string.h>
 
 /* - - - - Defines - - - - */
-#define true 1
-#define false 0
 #define Input_size 255
 
 enum YN {Yes, No};
@@ -197,7 +199,7 @@ void Strshift(char *String, int Start, int Amt)
 /*           String - String to compare keyword against.        */
 /*   Output: Strcmp2 - false = Not equal, true = Equal          */
 /****************************************************************/
-int Strcmp2(const char *Keyword, const char *String)
+bool Strcmp2(const char *Keyword, const char *String)
 {
     int I;
 
@@ -297,7 +299,7 @@ void Conjugate(char *String, int Start)
 void Get_response(char *Input, struct Key_element *Keyhead_ptr)
 {
     int len;
-    int Found = false;
+    bool Found = false;
     unsigned I;
     int Concat_pos;
     struct Key_element *currPtr;
@@ -420,8 +422,8 @@ struct Key_element *Eliza_init(const char *Filename)
     struct Key_element *Prev_ptr = NULL;
     struct ResponseAnchor *ResponseAnchor_ptr = NULL;
     struct ResponseElement *Response_ptr = NULL;
-    int Done = false;
-    int Title = false;
+    bool Done = false;
+    bool Title = false;
     enum { Response, Keyword } Mode = Response;
 
     /* Open the eliza response file */
@@ -599,7 +601,7 @@ int main(int argc, char *argv[])
     char Filename[128];
 
     /* Logging indication flag */
-    int Log = false;
+    bool Log = false;
     /* Log file session pointer */
     FILE *Log_file;
     /* Time and Date stuff for logging */
