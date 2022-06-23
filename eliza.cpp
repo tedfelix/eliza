@@ -16,8 +16,6 @@
 /* - - - - Defines - - - - */
 #define Input_size 255
 
-enum YN {Yes, No};
-
 // ********************************************************************
 
 /* These structures define the keyword and response chains.  Each    */
@@ -95,7 +93,7 @@ static char Conjugates[Num_conj][2][11] =
 /*   Output: Tstr is updated                                    */
 /****************************************************************/
 void Substrcpy(
-    char *Fstr, int Start, int Len, char *Tstr, enum YN nullTerminate)
+    char *Fstr, int Start, int Len, char *Tstr, bool nullTerminate)
 {
     int I;
 
@@ -106,7 +104,7 @@ void Substrcpy(
     }
 
     /* If null requested, add it */
-    if (nullTerminate == Yes)
+    if (nullTerminate)
         Tstr[I] = '\0';
 }
 
@@ -252,7 +250,7 @@ void Conjugate(char *String, int Start)
                           0,
                           strlen(&(Conjugates[X][1][0])),
                           &(String[I]),
-                          No);
+                          false);
 
                 /* Jump over the newly conjugated portion */
                 I += strlen(&(Conjugates[X][1][0])) - 2;
@@ -275,7 +273,7 @@ void Conjugate(char *String, int Start)
                           0,
                           strlen(&(Conjugates[X][0][0])),
                           &(String[I]),
-                          No);
+                          false);
 
                 /* Jump over the newly conjugated portion */
                 I += strlen(&(Conjugates[X][0][0])) - 2;
@@ -469,7 +467,7 @@ struct Key_element *Eliza_init(const char *Filename)
             /* Copy the keyword into the new element on chain losing the */
             /* first character. */
             Substrcpy(Work_string, 1, strlen(Work_string) - 2,
-                      &(Curr_key_ptr -> Keyword), Yes);
+                      &(Curr_key_ptr -> Keyword), true);
 
             /* If we have been doing responses */
             if (Mode == Response)
@@ -516,7 +514,7 @@ struct Key_element *Eliza_init(const char *Filename)
 
                 /* Copy response text into new element */
                 Substrcpy(Work_string, 1, strlen(Work_string) - 2,
-                          &(Response_ptr -> Response), Yes);
+                          &(Response_ptr -> Response), true);
 
                 /* Point new element to NULL */
                 Response_ptr -> nextPtr = NULL;
